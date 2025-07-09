@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
   component: HomeComponent,
-  // ssr: true,
+  ssr: false,
 });
 
 const TITLE_TEXT = `

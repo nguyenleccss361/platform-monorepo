@@ -10,10 +10,11 @@ export const createRouter = () => {
     scrollRestoration: true,
     defaultPreloadStaleTime: 0,
     context: {},
-        defaultPendingComponent: () => <Loader />,
+    defaultPendingComponent: () => <Loader />,
     defaultNotFoundComponent: () => <div>Not Found</div>,
     Wrap: ({ children }) => <>{children}</>,
-      });
+    // defaultSsr: false
+  });
   return router;
 };
 

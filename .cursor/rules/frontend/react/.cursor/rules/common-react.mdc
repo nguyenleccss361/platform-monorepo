@@ -1,0 +1,24 @@
+---
+description: Common React Best Practices
+globs: **/*.tsx
+alwaysApply: false
+---
+
+# React Naming Conventions {.guideline}
+- Favor named exports for components.
+
+# Component Design {.guideline}
+- Avoid nested `if/else` or complex conditional rendering.
+- Extract new components when logic becomes hard to follow.
+- Use inline ternaries only for small, readable expressions.
+
+# Timing Functions {.guideline}
+- Use `setTimeout` only when necessary.
+- Always add a comment to explain the reason for its use.
+
+# Comments {.guideline}
+- Avoid redundant or obvious comments.
+- Only add comments for:
+  - Race conditions (e.g. explaining async timing bugs).
+  - Long-term TODOs.
+  - Complex logic that even experienced engineers may misunderstand.

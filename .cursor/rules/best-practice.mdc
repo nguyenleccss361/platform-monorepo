@@ -1,0 +1,12 @@
+---
+description: Best practice for logic coding.
+globs: **/*.ts, **/*.tsx
+alwaysApply: false
+---
+
+# Coding conventions
+- Use early returns whenever possible to make the code more readable.
+
+# Naming conventions
+- Use lowercase with dashes for directories (e.g., components/auth-wizard).
+- Use descriptive variable with auxiliary verbs (e.g., isLoading, hasError) and use descriptive function names.

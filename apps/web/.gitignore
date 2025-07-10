@@ -30,8 +30,7 @@ routeTree.gen.ts
 .wrangler
 
 # Environment & local files
-.env*
-!.env.example
+.env
 .DS_Store
 *.pem
 *.local

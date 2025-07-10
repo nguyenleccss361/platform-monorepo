@@ -1,7 +1,7 @@
 import { TitleBar } from '@/components/Head'
 import { SearchField } from '@/components/Input'
 import { SkeletonLoading } from '@/components/Skeleton'
-import { useProjects } from '@/features/project/api'
+import { getProjectsOptions, useProjects } from '@/features/project/api'
 import { CreateProject } from '@/features/project/components/CreateProject'
 import { ListProjectItem } from '@/features/project/components/ListProjectItem'
 import { useAuthorization } from '@/lib/authorization'
@@ -11,6 +11,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import z from 'zod'
 import { ContentLayout } from './_contentLayout'
+import { queryClient } from '@/lib/react-query'
 
 export type Project = {
   id: string
@@ -47,7 +48,11 @@ export const CreateProjectSchema = z.object({
 
 export const Route = createFileRoute('/_projectLayout/project')({
   component: RouteComponent,
-  ssr: false
+  ssr: false,
+  loader: async () => {
+    await queryClient.prefetchQuery(getProjectsOptions())
+    return null
+  },
 })
 
 function RouteComponent({ hasSideBar = true }: { hasSideBar?: boolean }) {

@@ -1,9 +1,9 @@
-import { useQuery } from '@tanstack/react-query'
+import { queryOptions, useQuery } from '@tanstack/react-query'
 
 import { axios } from '@/lib/axios'
-import { type ExtractFnReturnType, type QueryConfig } from '@/lib/react-query'
-import { limitPagination } from '@/utils/const'
 import type { ProjectList } from '@/routes/_projectLayout.project'
+import { limitPagination } from '@/utils/const'
+import type { QueryConfig } from '@/lib/react-query'
 
 type GetProjects = {
   search_field?: string
@@ -12,7 +12,7 @@ type GetProjects = {
   limit?: number
 }
 
-export const getProjects = ({
+export const getProjects = async ({
   offset,
   limit,
   search_field,
@@ -28,26 +28,24 @@ export const getProjects = ({
     params.append('search_field', field)
   })
 
-  return axios.get('/api/projects', { params })
+  return axios.get('/api/projects', { params })  
 }
 
-type QueryFnType = typeof getProjects
-
-export type UseProjectsOptions = {
-  config?: QueryConfig<QueryFnType>
-} & GetProjects
-
-export const useProjects = ({
-  offset = 0,
-  limit = limitPagination,
-  search_field = 'name',
-  search_str = '',
-  config,
-}: UseProjectsOptions) => {
-  const projectQuery = useQuery<ExtractFnReturnType<QueryFnType>>({
+export const getProjectsOptions = ({ offset = 0, limit = limitPagination, search_field = 'name', search_str = '' }: GetProjects = {}) => {
+  return queryOptions({
     queryKey: ['projects', offset, limit, search_field, search_str],
     queryFn: () => getProjects({ offset, limit, search_field, search_str }),
-    ...config,
   })
-  return projectQuery
 }
+
+type UseProjectsOptions = {
+  queryConfig?: QueryConfig<typeof getProjectsOptions>
+} & GetProjects
+
+export const useProjects = ({ offset, limit, search_field, search_str, queryConfig }: UseProjectsOptions = {}) => {
+  return useQuery({
+    ...getProjectsOptions({ offset, limit, search_field, search_str }),
+    ...queryConfig,
+  })
+}
+

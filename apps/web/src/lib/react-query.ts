@@ -84,8 +84,8 @@ export type ExtractFnReturnType<FnType extends (...args: any) => any> = Awaited<
   Promise<ReturnType<FnType>>
 >
 
-export type QueryConfig<QueryFnType extends (...args: any) => any> = Omit<
-  UseQueryOptions<ExtractFnReturnType<QueryFnType>>,
+export type QueryConfig<T extends (...args: any[]) => any> = Omit<
+  ReturnType<T>,
   'queryKey' | 'queryFn'
 >
 

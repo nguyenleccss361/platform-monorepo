@@ -1,0 +1,32 @@
+@font-face {
+  font-display: swap;
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/FontPublicSans/PublicSans-Light.ttf') format('truetype');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Public Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: url('/fonts/FontPublicSans/PublicSans-LightItalic.ttf')
+    format('truetype');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: url('/fonts/FontPublicSans/PublicSans-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Public Sans';
+  font-style: italic;
+  font-weight: 600;
+  src: url('/fonts/FontPublicSans/PublicSans-BoldItalic.ttf') format('truetype');
+}

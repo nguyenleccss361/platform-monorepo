@@ -1,0 +1,369 @@
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect, useRef, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
+import { HiOutlineXMark } from 'react-icons/hi2'
+import { LuTrash } from 'react-icons/lu'
+
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogTitle } from '@/components/ui/dialog'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { API_URL } from '@/config'
+
+
+import { type UpdateProjectDTO, useUpdateProject } from '../api/updateProject'
+import { CreateProjectSchema, type Project } from '@/routes/_projectLayout.project'
+import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE, useUploadImage } from '@/hook'
+import { useUploadImageAPI } from '../api/uploadImage'
+
+export function UpdateProject({
+  close,
+  isOpen,
+  selectedUpdateProject,
+}: {
+  close: () => void
+  isOpen: boolean
+  selectedUpdateProject: Project
+}) {
+  const { t } = useTranslation()
+
+  const {
+    avatarRef,
+    uploadImageErr,
+    setUploadImageErr,
+    controlUploadImage,
+    setValueUploadImage,
+    getValueUploadImage,
+  } = useUploadImage()
+
+  const cancelButtonRef = useRef(null)
+
+  const form = useForm<UpdateProjectDTO['data']>({
+    resolver: CreateProjectSchema && zodResolver(CreateProjectSchema),
+    defaultValues: {
+      name: selectedUpdateProject.name,
+      description: selectedUpdateProject.description,
+      image: selectedUpdateProject.image,
+    },
+  })
+
+  const { handleSubmit, watch, getValues, setValue } = form
+
+  const { mutate, isPending, isSuccess } = useUpdateProject()
+
+  useEffect(() => {
+    if (isSuccess) {
+      close()
+    }
+  }, [isSuccess, close])
+
+  useEffect(() => {
+    if (isOpen) {
+      form.reset({
+        name: selectedUpdateProject.name,
+        description: selectedUpdateProject.description,
+        image: selectedUpdateProject.image,
+      })
+      setUploadImageFileName(selectedUpdateProject.image.split('/').pop())
+    }
+    setUploadImageErr('')
+  }, [isOpen])
+
+  const { mutateAsync: mutateAsyncUploadImage } = useUploadImageAPI()
+
+  function handleResetForm() {
+    setUploadImageFileName('')
+    setValue('image', '')
+  }
+
+  const [uploadImageFileName, setUploadImageFileName] = useState(
+    selectedUpdateProject.image.split('/').pop(),
+  )
+
+  return (
+    <Dialog isOpen={isOpen} onClose={close} initialFocus={cancelButtonRef}>
+      <div className="inline-block rounded-lg bg-white px-4 pb-4 pt-5 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-xl sm:p-8 sm:align-middle">
+        <div className="absolute -right-3 -top-3">
+          <button
+            className="rounded-md bg-white text-secondary-900 hover:text-secondary-700 focus:outline-none focus:ring-2 focus:ring-secondary-600"
+            onClick={close}
+          >
+            <span className="sr-only">Close panel</span>
+            <HiOutlineXMark className="size-6" aria-hidden="true" />
+          </button>
+        </div>
+        <div className="mt-3 text-center sm:mt-0 sm:text-left">
+          <div className="mb-4 flex items-center justify-center">
+            <DialogTitle className="text-h1 text-secondary-900">
+              {t('cloud:project_manager.add_project.edit')}
+            </DialogTitle>
+          </div>
+          <Form {...form}>
+            <form
+              id="update-project"
+              className="flex w-full flex-col justify-between space-y-6"
+              onSubmit={handleSubmit(async values => {
+                if (
+                  getValueUploadImage('file') != null
+                  && getValueUploadImage('file').length !== 0
+                  && uploadImageFileName !== ''
+                ) {
+                  const dataUploadImage = await mutateAsyncUploadImage({
+                    data: {
+                      project_id: selectedUpdateProject.id,
+                      file: getValueUploadImage('file'),
+                    },
+                  })
+                  mutate({
+                    data: {
+                      name: values.name,
+                      description: values.description,
+                      image: dataUploadImage.link
+                        .split('/')
+                        .map((part, index, arr) =>
+                          index === arr.length - 1
+                            ? part.replace(/\s+/g, '')
+                            : part,
+                        )
+                        .join('/'),
+                    },
+                    projectId: selectedUpdateProject.id,
+                  })
+                }
+                else {
+                  mutate({
+                    data: {
+                      name: values.name,
+                      description: values.description,
+                    },
+                    projectId: selectedUpdateProject.id,
+                  })
+                }
+              })}
+            >
+              <div>
+                <div className="space-y-3">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          {t('cloud:project_manager.add_project.name')}
+                          <span className="pl-1 text-primary">*</span>
+                        </FormLabel>
+                        <div>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              placeholder={t(
+                                'cloud:project_manager.add_project.name_placeholder',
+                              )}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </div>
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          {t('cloud:project_manager.add_project.description')}
+                        </FormLabel>
+                        <div>
+                          <FormControl>
+                            <Textarea
+                              className="resize-none"
+                              {...field}
+                              rows={6}
+                              placeholder={t(
+                                'cloud:project_manager.add_project.description_placeholder',
+                              )}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </div>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <div className="relative my-4 h-28 rounded-md bg-backgroundUpload">
+                    <div className="absolute left-5 top-5 text-white">
+                      <p className="mb-3 font-semibold">
+                        {watch('name') !== '' && watch('name') != null
+                          ? watch('name')
+                          : t('cloud:project_manager.name')}
+                      </p>
+                      <p>
+                        {watch('description') !== ''
+                        && watch('description') != null
+                          ? watch('description')
+                          : t('cloud:project_manager.description')}
+                      </p>
+                    </div>
+                    {getValueUploadImage('file') && uploadImageFileName && (
+                      <img
+                        src={`${
+                          selectedUpdateProject.image !== ''
+                            ? `${API_URL}/file/${selectedUpdateProject.image}`
+                            : ''
+                        }`}
+                        alt="Project"
+                        className="my-3 h-28 w-full rounded-md"
+                        ref={avatarRef}
+                      />
+                    )}
+                    {getValueUploadImage('file') && uploadImageFileName
+                      ? (
+                        <Button
+                          className="absolute right-5 top-5 min-h-fit min-w-fit"
+                          variant="none"
+                          size="square"
+                          onClick={handleResetForm}
+                        >
+                          <LuTrash className="size-4 text-primary" />
+                        </Button>
+                      )
+                      : null}
+                  </div>
+                  <div>
+                    <FormLabel>
+                      {t('cloud:project_manager.add_project.avatar')}
+                    </FormLabel>
+                    <div className="mb-1 mt-2 flex items-center justify-between">
+                      <div className="mr-4 flex-1">
+                        <Input
+                          disabled
+                          value={
+                            uploadImageFileName !== ''
+                              ? uploadImageFileName
+                              : ''
+                          }
+                          placeholder={t(
+                            'cloud:project_manager.add_project.no_file',
+                          )}
+                          className="h-9 w-full disabled:cursor-auto disabled:bg-white"
+                        />
+                      </div>
+                      <FormField
+                        control={controlUploadImage}
+                        name="file"
+                        render={({ field }) => (
+                          <FormItem className="space-y-0">
+                            <FormLabel className="flex h-9 w-fit cursor-pointer items-center justify-center gap-x-2 rounded-md border bg-primary-200 px-5 py-2 font-medium text-primary shadow-sm hover:opacity-80">
+                              {t('cloud:project_manager.add_project.upload')}
+                            </FormLabel>
+                            <div>
+                              <FormControl>
+                                <Input
+                                  type="file"
+                                  className="mt-2 border-none p-2 shadow-none"
+                                  {...controlUploadImage.register('file')}
+                                  onChange={event => {
+                                    setUploadImageErr('')
+                                    if (event.target && event.target.files) {
+                                      const file = event.target.files[0]
+                                      const formData = new FormData()
+                                      formData.append(
+                                        'file',
+                                        event.target.files[0],
+                                      )
+                                      setValueUploadImage(
+                                        'file',
+                                        formData.get('file') as unknown as {
+                                          file: File
+                                        },
+                                      )
+
+                                      if (file && file.size > MAX_FILE_SIZE) {
+                                        setUploadImageErr(
+                                          t('validate:image_max_size'),
+                                        )
+                                        return false
+                                      }
+                                      if (
+                                        file
+                                        && !ACCEPTED_IMAGE_TYPES.includes(
+                                          file.type,
+                                        )
+                                      ) {
+                                        setUploadImageErr(
+                                          t('validate:image_type'),
+                                        )
+                                        return false
+                                      }
+
+                                      const reader = new FileReader()
+                                      reader.readAsDataURL(file)
+                                      reader.onload = e => {
+                                        if (
+                                          avatarRef.current != null
+                                          && e.target != null
+                                          && reader.readyState === 2
+                                        ) {
+                                          avatarRef.current.src = e.target
+                                            .result as string
+                                        }
+                                      }
+                                      setUploadImageFileName(file.name)
+                                      event.target.value = ''
+                                    }
+                                  }}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </div>
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </div>
+                  <div className="text-body-xs">
+                    {t('cloud:project_manager.add_project.upload_instruction')}
+                  </div>
+                  <p className="text-body-sm text-primary">{uploadImageErr}</p>
+                </div>
+              </div>
+              <div className="flex items-center justify-center gap-4">
+                <Button
+                  isLoading={isPending}
+                  form="update-project"
+                  type="submit"
+                  size="md"
+                  className="rounded-md border bg-primary"
+                >
+                  {t('dialog:save')}
+                </Button>
+                <Button
+                  type="button"
+                  variant="secondaryLight"
+                  className="inline-flex w-full justify-center rounded-md border-none focus:ring-1 focus:ring-secondary-700 focus:ring-offset-1 sm:mt-0 sm:w-auto sm:text-body-sm"
+                  onClick={() => {
+                    close()
+                  }}
+                >
+                  {t('dialog:cancel')}
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </div>
+      </div>
+    </Dialog>
+  )
+}

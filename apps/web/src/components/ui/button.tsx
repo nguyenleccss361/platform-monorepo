@@ -1,59 +1,102 @@
-import * as React from "react"
-import { Slot as SlotPrimitive } from "radix-ui"
-import { cva, type VariantProps } from "class-variance-authority"
+import { Slot } from '@radix-ui/react-slot'
+import { cva, type VariantProps } from 'class-variance-authority'
+import * as React from 'react'
+import { useSpinDelay } from 'spin-delay'
 
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils'
+
+import { Spinner } from '../Spinner'
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  'h-9 flex cursor-pointer items-center justify-center rounded-md font-medium gap-x-2 border border-btn shadow-sm focus:outline-none disabled:cursor-not-allowed disabled:bg-secondary-500 disabled:opacity-70',
   {
     variants: {
       variant: {
-        default:
-          "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+        primary: 'min-w-24 !bg-primary !text-white',
+        secondary: 'bg-secondary-600', // hover:bg-secondary/80
+        secondaryLight: 'min-w-24 bg-secondary-500 border-none',
+        danger: 'min-w-24 !bg-primary-200 text-primary border-none',
+        trans: 'bg-transparent border-none',
+        muted: 'bg-white',
         outline:
-          "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
-        secondary:
-          "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
-        ghost:
-          "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
-        link: "text-primary underline-offset-4 hover:underline",
+          'border-input bg-background hover:bg-accent hover:text-accent-foreground',
+        none: 'bg-transparent shadow-none border-none',
+        full: 'block w-full bg-white border-secondary-600',
+        pagination: 'min-w-9 !bg-white !p-2',
+        search: 'bg-search border-none !p-2',
+        disable:
+          'min-w-24 bg-secondary-500 text-secondary-700 border-none cursor-not-allowed opacity-70',
+        downloadFile: 'bg-green-100 text-green-500 border-none',
       },
       size: {
-        default: "h-9 px-4 py-2 has-[>svg]:px-3",
-        sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
-        icon: "size-9",
+        sm: 'py-2 px-3',
+        md: 'py-2 px-6',
+        lg: 'py-3 px-8',
+        square: 'p-2',
       },
     },
     defaultVariants: {
-      variant: "default",
-      size: "default",
+      variant: 'primary',
+      size: 'md',
     },
-  }
+  },
 )
 
-function Button({
-  className,
-  variant,
-  size,
-  asChild = false,
-  ...props
-}: React.ComponentProps<"button"> &
+export type IconProps =
+  | { startIcon: React.ReactElement, endIcon?: never }
+  | { endIcon: React.ReactElement, startIcon?: never }
+  | { endIcon?: undefined, startIcon?: undefined }
+
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
-  }) {
-  const Comp = asChild ? SlotPrimitive.Slot : "button"
+    isLoading?: boolean
+    labelClassName?: string;
+  } & IconProps
 
-  return (
-    <Comp
-      data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    />
-  )
-}
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      type = 'button',
+      className,
+      variant,
+      size,
+      asChild = false,
+      isLoading = false,
+      startIcon,
+      endIcon,
+      ...props
+    },
+    ref,
+  ) => {
+    const Comp = asChild
+      ? Slot
+      : 'button'
+    const showSpinner = useSpinDelay(isLoading, {
+      delay: 150,
+      minDuration: 300,
+    })
+
+    return (
+      <Comp
+        type={type}
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        disabled={showSpinner}
+        {...props}
+      >
+        {showSpinner && (
+          <Spinner size="sm" variant="primary" className="text-current" />
+        )}
+        <span className={cn("flex items-center gap-x-2", props.labelClassName)}>
+          {!showSpinner && startIcon}
+          {props.children}
+          {!showSpinner && endIcon}
+        </span>
+      </Comp>
+    )
+  },
+)
+Button.displayName = 'Button'
 
 export { Button, buttonVariants }

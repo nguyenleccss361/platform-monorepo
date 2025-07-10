@@ -1,0 +1,178 @@
+/**
+   * react-checkbox-tree
+   */
+
+label .rct-checkbox {
+  display: flex;
+}
+
+.rct-node span.rct-text {
+  line-height: 1.5rem;
+  padding: 4px 0;
+}
+
+.react-checkbox-tree label {
+  align-items: center;
+  display: flex;
+}
+
+.rct-collapse,
+.rct-checkbox,
+.rct-node-icon {
+  padding: 0 3px !important;
+}
+
+.rct-collapse *,
+.rct-checkbox *,
+.rct-node-icon * {
+  display: inline-block;
+  height: 18px;
+  margin: 0;
+  padding: 0;
+  width: 18px !important;
+}
+
+.rct-collapse {
+  font-size: 16px !important;
+}
+
+.rct-node-icon {
+  padding: 0;
+}
+
+.focused-node .rct-bare-label {
+  background: rgb(255 204.85 204 / 100%) !important;
+  outline: 0;
+}
+
+.focus-rct-title {
+  background: white !important;
+  color: #e03 !important;
+}
+
+.rct-node-clickable:hover {
+  background: white !important;
+  color: #e03 !important;
+  cursor: pointer !important;
+  outline: 0;
+}
+
+.rct-node-clickable:focus {
+  background: white !important;
+  color: #e03 !important;
+  cursor: pointer !important;
+  outline: 0;
+}
+
+.rct-disabled .rct-node-clickable:hover {
+  background: none !important;
+  color: black !important;
+  cursor: default !important;
+}
+
+.rct-disabled .rct-node-clickable:focus {
+  background: none !important;
+  color: black !important;
+  cursor: default !important;
+}
+
+.rct-disabled .rct-bare-label {
+  cursor: default !important;
+}
+
+.check-box-tree-custom .rct-node {
+  position: relative;
+}
+
+.check-box-tree-custom .rct-node::before {
+  border-left: 1px dashed #333;
+  bottom: 0;
+  content: '';
+  left: -12px;
+  position: absolute;
+  top: 0;
+}
+
+.check-box-tree-custom .rct-node::after {
+  border-top: 1px dashed #333;
+  content: '';
+  left: -10px;
+  position: absolute;
+  top: 16px;
+  width: 10px;
+}
+
+.tree-checkbox-role .rct-text label {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.tree-checkbox-role .react-checkbox-tree .rct-checkbox {
+  order: 2;
+}
+
+.tree-checkbox-role .react-checkbox-tree .rct-title {
+  margin-left: 8px;
+  order: 1;
+}
+
+.tree-checkbox-role .rct-node.rct-node-parent {
+  background-color: rgb(75 70 92 / 3%) !important;
+  border-top: 1px solid rgb(203 213 225);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 0;
+}
+
+.tree-checkbox-role .rct-text label:hover {
+  background-color: white !important;
+}
+
+.tree-thing-custom li::before {
+  border-left: 1px dashed #333;
+  bottom: 0;
+  content: '';
+  left: -16px;
+  position: absolute;
+  top: -4px;
+}
+
+.tree-thing-custom li::after {
+  border-top: 1px dashed #333;
+  content: '';
+  left: -14px;
+  position: absolute;
+  top: 17px;
+  width: 10px;
+}
+
+.tree-checkbox-role ol {
+  padding-inline: 0 !important;
+}
+
+.tree-checkbox-role .rct-node.rct-node-leaf {
+  background-color: white !important;
+  border-top: 1px solid rgb(203 213 225);
+  padding-block: 4px !important;
+}
+
+.tree-checkbox-role .rct-node.rct-node-parent.rct-node-expanded {
+  padding-bottom: 0 !important;
+}
+
+.tree-checkbox-role .rct-node.rct-node-parent.rct-node-expanded > span {
+  padding-bottom: 12px !important;
+}
+
+.tree-checkbox-role .rct-node.rct-node-parent .rct-text {
+  padding-inline: 21px !important;
+}
+
+.tree-checkbox-role .rct-node.rct-node-parent > span label:hover {
+  background-color: rgb(75 70 92 / 0%) !important;
+}
+
+.custom-text-default-value > .rct-text > .rct-bare-label {
+  color: #e03;
+}

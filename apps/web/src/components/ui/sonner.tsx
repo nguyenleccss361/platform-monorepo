@@ -1,25 +1,39 @@
-"use client";
+import { Toaster as Sonner } from 'sonner'
 
-import { useTheme } from "next-themes";
-import { Toaster as Sonner, type ToasterProps } from "sonner";
+import { ErrorToastIcon, SuccessToastIcon } from '../SVGIcons'
+
+type ToasterProps = React.ComponentProps<typeof Sonner>
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme();
-
   return (
     <Sonner
-      theme={theme as ToasterProps["theme"]}
-      className="toaster group"
-      style={
-        {
-          "--normal-bg": "var(--popover)",
-          "--normal-text": "var(--popover-foreground)",
-          "--normal-border": "var(--border)",
-        } as React.CSSProperties
-      }
+      toastOptions={{
+        classNames: {
+          closeButton: 'absolute top-5 left-80',
+        },
+      }}
+      icons={{
+        success: (
+          <SuccessToastIcon
+            width={30}
+            height={30}
+            viewBox="0 0 30 30"
+            className="size-6"
+          />
+        ),
+        error: (
+          <ErrorToastIcon
+            width={30}
+            height={30}
+            viewBox="0 0 30 30"
+            className="size-6"
+          />
+        ),
+      }}
+      className="group"
       {...props}
     />
-  );
-};
+  )
+}
 
-export { Toaster };
+export { Toaster }

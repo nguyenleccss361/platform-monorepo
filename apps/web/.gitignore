@@ -22,6 +22,7 @@
 .tanstack/
 .nitro/
 routeTree.gen.ts
+.tanstack
 
 # Deployment
 .vercel

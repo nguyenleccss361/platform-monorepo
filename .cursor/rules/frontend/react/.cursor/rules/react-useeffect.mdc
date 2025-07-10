@@ -1,0 +1,74 @@
+---
+description: useState, useEffect, useRef Best Practices
+globs: **/*.tsx
+alwaysApply: false
+---
+
+# Minimize Local State {.guideline}
+- Treat UIs as a thin layer over your data.
+- Avoid `useState` unless absolutely necessary and clearly separate from business logic.
+- Prefer plain variables or `useRef` for non-reactive values.
+
+# Avoid Overusing `useEffect` {.guideline}
+- Prefer derived variables over `useEffect` state syncing.
+- Use `useEffect` **only** for:
+  - Synchronizing with external systems (e.g. DOM events, network calls).
+  - Side effects that cannot be expressed with pure render logic.
+- Avoid chaining `useEffect` just to derive values from state — derive them inline.
+
+## 🚫 Anti-pattern {.anti-pattern}
+```tsx
+export default function TodoList() {
+  const [todos, setTodos] = useState(initialTodos);
+  const [showActive, setShowActive] = useState(false);
+  const [activeTodos, setActiveTodos] = useState([]);
+  const [visibleTodos, setVisibleTodos] = useState([]);
+  const [footer, setFooter] = useState(null);
+
+  useEffect(() => {
+    setActiveTodos(todos.filter((todo) => !todo.completed));
+  }, [todos]);
+
+  useEffect(() => {
+    setVisibleTodos(showActive ? activeTodos : todos);
+  }, [showActive, todos, activeTodos]);
+
+  useEffect(() => {
+    setFooter(<footer>{activeTodos.length} todos left</footer>);
+  }, [activeTodos]);
+
+  return footer;
+}
+```
+
+- ❌ Overuses `useEffect` for pure derivation
+- ❌ Too much intermediate state
+- ❌ Poor readability and maintainability
+
+---
+
+## ✅ Best Practice {.example}
+```tsx
+export default function TodoList() {
+  const [todos, setTodos] = useState(initialTodos);
+  const [showActive, setShowActive] = useState(false);
+
+  const activeTodos = todos.filter((todo) => !todo.completed);
+  const visibleTodos = showActive ? activeTodos : todos;
+
+  return (
+    <div>
+      <ul>
+        {visibleTodos.map((todo) => (
+          <li key={todo.id}>{todo.title}</li>
+        ))}
+      </ul>
+      <footer>{activeTodos.length} todos left</footer>
+    </div>
+  );
+}
+```
+
+- ✅ Derives `activeTodos` and `visibleTodos` without side effects
+- ✅ No `useEffect` needed for pure computation
+- ✅ UI is a direct function of state — clean and declarative

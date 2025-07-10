@@ -50,7 +50,7 @@ export const Route = createFileRoute('/_projectLayout/project')({
   component: RouteComponent,
   ssr: false,
   loader: async () => {
-    await queryClient.prefetchQuery(getProjectsOptions())
+    await queryClient.ensureQueryData(getProjectsOptions())
     return null
   },
 })

@@ -18,6 +18,8 @@ import { useUser } from "@/lib/auth";
 import useLocalStorageState from "use-local-storage-state";
 import { useEffect } from "react";
 import { PATHS } from "./PATHS";
+import '@/style/progress-bar.css'
+import { endProgress, startProgress } from "@/components/Progress";
 
 export interface RouterAppContext {
 }
@@ -49,9 +51,12 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 });
 
 function RootDocument() {
-  const { isLoading: isFetching, location: { pathname } } = useRouterState({
-    select: (s) => ({ isLoading: s.isLoading, location: s.location }),
-  });
+  const {
+    status,
+    location: { pathname },
+  } = useRouterState({
+    select: s => ({ status: s.status, location: s.location }),
+  })
 
   // const navigate = useNavigate()
 
@@ -93,6 +98,13 @@ function RootDocument() {
   //     }
   //   }
   // }, [isAuthRoutes, projectId, userDataFromStorage])
+  useEffect(() => {
+    if (status === 'pending') {
+      startProgress()
+    } else if(status === 'idle') {
+      endProgress()
+    }
+  }, [status])
 
   return (
     <HelmetProvider>
@@ -110,7 +122,7 @@ function RootDocument() {
               visibleToasts={10}
             />
             <div className="grid h-svh grid-rows-[auto_1fr]">
-              {isFetching ? <Loader /> : <Outlet />}
+              <Outlet />
             </div>
             <TanStackRouterDevtools position="bottom-left" />
           </QueryClientProvider>

@@ -13,7 +13,6 @@ export const createRouter = () => {
     context: {
       queryClient
     },
-    defaultPendingComponent: () => <Loader />,
     defaultNotFoundComponent: () => <div>Not Found</div>,
     Wrap: ({ children }) => <>{children}</>,
     // defaultSsr: false

@@ -61,6 +61,7 @@
     "use-debounce": "^10.0.5",
     "use-local-storage-state": "^19.5.0",
     "vite-tsconfig-paths": "^5.1.4",
+    "nprogress": "^0.2.0",
     "zod": "^3.25.16"
   },
   "devDependencies": {
@@ -72,6 +73,7 @@
     "@types/react-dom": "^19.0.4",
     "@types/react-helmet": "^6.1.11",
     "@vitejs/plugin-react": "^4.5.2",
+    "@types/nprogress": "^0.2.3",
     "autoprefixer": "^10.4.21",
     "jsdom": "^26.0.0",
     "postcss": "^8.5.6",

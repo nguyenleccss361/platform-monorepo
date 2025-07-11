@@ -1,5 +1,5 @@
 import { axios } from '@/lib/axios'
-import type { LoginCredentialsDTO } from '@/features/auth/component/LoginForm'
+import type { LoginCredentialsDTO } from '@/features/auth/component/login-form'
 import type { UserResponse } from '@/types'
 
 export const loginWithEmailAndPassword = (

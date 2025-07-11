@@ -17,7 +17,7 @@ import { useUser } from "@/lib/auth";
 import useLocalStorageState from "use-local-storage-state";
 import { useEffect } from "react";
 import '@/style/progress-bar.css'
-import { endProgress, startProgress } from "@/components/Progress";
+import { endProgress, startProgress } from "@/components/progress";
 
 export interface RouterAppContext {
   queryClient: QueryClient
@@ -53,8 +53,9 @@ function RootDocument() {
   const {
     status,
     location: { pathname },
+    isLoading
   } = useRouterState({
-    select: s => ({ status: s.status, location: s.location }),
+    select: s => ({ status: s.status, location: s.location, isLoading: s.isLoading }),
   })
 
   // const navigate = useNavigate()
@@ -98,12 +99,12 @@ function RootDocument() {
   //   }
   // }, [isAuthRoutes, projectId, userDataFromStorage])
   useEffect(() => {
-    if (status === 'pending') {
+    if (isLoading && status === 'pending') {
       startProgress()
-    } else if (status === 'idle') {
+    } else if (!isLoading || status === 'idle') {
       endProgress()
     }
-  }, [status])
+  }, [status, isLoading])
 
   return (
     <HelmetProvider>

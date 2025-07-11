@@ -8,7 +8,7 @@ import useLocalStorageState from 'use-local-storage-state'
 
 import btnDeleteIcon from '@/assets/icons/btn-delete.svg'
 import btnEditIcon from '@/assets/icons/btn-edit.svg'
-import { BtnContextMenuIcon } from '@/components/SVGIcons'
+import { BtnContextMenuIcon } from '@/components/svg-icons'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,14 +24,14 @@ import {
 import { API_URL } from '@/config'
 import { useAuthorization } from '@/lib/authorization'
 
-import { backupProject } from '../api/backupProject'
-import { useDeleteProject } from '../api/deleteProject'
+import { backupProject } from '../api/backup-project'
+import { useDeleteProject } from '../api/delete-project'
 
-import { UpdateProject } from './UpdateProject'
+import { UpdateProject } from './update-project'
 import { useNavigate } from '@tanstack/react-router'
-import type { Project } from '@/routes/_projectLayout.project'
+import type { Project } from '@/routes/_project-layout.project'
 import { useDisclosure } from '@/hook'
-import { ConfirmDialog } from '@/components/ConfirmDialog'
+import { ConfirmDialog } from '@/components/confirm-dialog'
 
 export function ListProjectItem({
   listProjectData,

@@ -1,2 +1,2 @@
-export * from './SkeletonCard'
-export * from './SkeletonLoading'
+export * from './skeleton-card'
+export * from './skeleton-loading'

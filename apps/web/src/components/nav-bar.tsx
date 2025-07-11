@@ -8,8 +8,7 @@ import manualIcon from '@/assets/icons/nav-manual.svg'
 import qldaIcon from '@/assets/icons/nav-qlda.svg'
 import English from '@/assets/images/landingpage/uk-flag.png'
 import VietNam from '@/assets/images/landingpage/vietnam-flag.png'
-import { Spinner } from '@/components/Spinner'
-import { SidebarDropDownIcon } from '@/components/SVGIcons'
+import { SidebarDropDownIcon } from '@/components/svg-icons'
 import {
   Command,
   CommandEmpty,
@@ -31,8 +30,9 @@ import { useLogout, useUser } from '@/lib/auth'
 import { Link, useNavigate, useRouterState } from '@tanstack/react-router'
 import { useCopyId } from '@/hook'
 import { useProjects } from '@/features/project/api'
-import { useUserInfo } from '@/features/auth/api/getUserInfo'
+import { useUserInfo } from '@/features/auth/api/get-user-info'
 import { cn } from '@/lib/utils'
+import { Spinner } from './spinner'
 
 const languages = [
   { code: 'vi', name: 'Tiếng Việt', icon: VietNam },

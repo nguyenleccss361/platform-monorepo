@@ -1,6 +1,6 @@
 import { Toaster as Sonner } from 'sonner'
 
-import { ErrorToastIcon, SuccessToastIcon } from '../SVGIcons'
+import { ErrorToastIcon, SuccessToastIcon } from '../svg-icons'
 
 type ToasterProps = React.ComponentProps<typeof Sonner>
 

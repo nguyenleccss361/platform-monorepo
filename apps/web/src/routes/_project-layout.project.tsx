@@ -1,16 +1,16 @@
-import { TitleBar } from '@/components/Head'
-import { SearchField } from '@/components/Input'
-import { SkeletonLoading } from '@/components/Skeleton'
-import { getProjectsOptions } from '@/features/project/api'
-import { CreateProject } from '@/features/project/components/CreateProject'
-import { ListProjectItem } from '@/features/project/components/ListProjectItem'
+import { TitleBar } from '@/components/head'
+import { SearchField } from '@/components/input'
+import { SkeletonLoading } from '@/components/skeleton'
+import { getProjectsOptions, useProjects } from '@/features/project/api'
+import { CreateProject } from '@/features/project/components/create-project'
+import { ListProjectItem } from '@/features/project/components/list-project-item'
 import { useAuthorization } from '@/lib/authorization'
-import type { BasePagination } from '@/types/base'
+import type { BasePagination } from '@/types/api'
 import { createFileRoute } from '@tanstack/react-router'
 import { Suspense, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import z from 'zod'
-import { ContentLayout } from './_contentLayout'
+import { ContentLayout } from './_content-layout'
 import { useSuspenseQuery } from '@tanstack/react-query'
 
 export type Project = {
@@ -46,7 +46,7 @@ export const CreateProjectSchema = z.object({
   description: z.string(),
 })
 
-export const Route = createFileRoute('/_projectLayout/project')({
+export const Route = createFileRoute('/_project-layout/project')({
   component: RouteComponent,
   pendingComponent: () => {
     return (<SkeletonLoading type='full' className="bg-slate-300"/>)

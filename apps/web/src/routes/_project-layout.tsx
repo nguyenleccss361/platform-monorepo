@@ -3,10 +3,10 @@ import { createFileRoute, Outlet } from '@tanstack/react-router'
 import { useState } from 'react'
 import { HiOutlineBars3 } from 'react-icons/hi2'
 import logo from '@/assets/images/logo.svg'
-import ProjectSidebar from '@/features/project/components/ProjectSidebar'
-import { Navbar } from '@/components/Navbar'
+import ProjectSidebar from '@/features/project/components/project-sidebar'
+import { Navbar } from '@/components/nav-bar'
 
-export const Route = createFileRoute('/_projectLayout')({
+export const Route = createFileRoute('/_project-layout')({
   component: RouteComponent,
 })
 
@@ -53,7 +53,7 @@ function RouteComponent({ hasSideBar = true }: { hasSideBar?: boolean }) {
               //   reloadDocument
               //   className="flex h-20 min-w-[256px] items-center justify-center border-b-2 border-solid bg-white"
               // >
-                <img src={logo} alt="logo" className="h-14 cursor-pointer" />
+                (<img src={logo} alt="logo" className="h-14 cursor-pointer" />)
               // </NavLink>
             )}
           <Navbar />

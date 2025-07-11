@@ -22,8 +22,8 @@ import {
   useCreateProject,
 } from '../api'
 import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE, useUploadImage } from '@/hook'
-import { CreateProjectSchema } from '@/routes/_projectLayout.project'
-import { useUploadImageAPI } from '../api/uploadImage'
+import { CreateProjectSchema } from '@/routes/_project-layout.project'
+import { useUploadImageAPI } from '../api/upload-image'
 
 type NewProjectProps = {
   close: React.Dispatch<React.SetStateAction<boolean>>

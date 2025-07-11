@@ -2,13 +2,13 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LuFileSymlink, LuPlus } from 'react-icons/lu'
 
-import { PlusIcon } from '@/components/SVGIcons'
+import { PlusIcon } from '@/components/svg-icons'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-import { ImportProject } from './ImportProject'
-import { NewProject } from './NewProject'
-import { FormDialog } from '@/components/FormDialog'
+import { ImportProject } from './import-project'
+import { NewProject } from './new-project'
+import { FormDialog } from '@/components/form-dialog'
 
 export function CreateProject() {
   const { t } = useTranslation()

@@ -4,7 +4,7 @@ import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
-import { IconCheckbox } from '../SVGIcons'
+import { IconCheckbox } from '../svg-icons'
 
 const DropdownMenu = DropdownMenuPrimitive.Root
 

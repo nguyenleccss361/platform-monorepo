@@ -1,5 +1,5 @@
 import { axios } from '@/lib/axios'
-import type { Project } from '@/routes/_projectLayout.project'
+import type { Project } from '@/routes/_project-layout.project'
 
 
 export const backupProject = ({

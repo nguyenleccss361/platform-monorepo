@@ -1,8 +1,8 @@
-import { useQuery } from '@tanstack/react-query'
+import { queryOptions, useQuery } from '@tanstack/react-query'
 import { z } from 'zod'
 
 import { axios } from '@/lib/axios'
-import { type ExtractFnReturnType, type QueryConfig } from '@/lib/react-query'
+import { type QueryConfig } from '@/lib/react-query'
 
 export type Profile = {
   identity_info: {
@@ -43,22 +43,25 @@ export type UserInfo = {
   phone: string
 }
 
-export const getUserInfo = (): Promise<UserInfo> => {
+const getUserInfo = async (): Promise<UserInfo> => {
+  // await sleep(5000)
   return axios.get('/api/users/self')
 }
 
-type QueryFnType = typeof getUserInfo
-
-type UseUserInfoOptions = {
-  config?: QueryConfig<QueryFnType>
-}
-
-export const useUserInfo = ({ config }: UseUserInfoOptions = {}) => {
-  const userInfoQuery = useQuery<ExtractFnReturnType<QueryFnType>>({
+export const getUserInfoOptions = () => {
+  return queryOptions({
     queryKey: ['user-info'],
     queryFn: () => getUserInfo(),
-    ...config,
   })
+}
 
-  return userInfoQuery
+type UseUserInfoOptions = {
+  queryConfig?: QueryConfig<typeof getUserInfoOptions>
+}
+
+export const useUserInfo = ({ queryConfig }: UseUserInfoOptions = {}) => {
+  return useQuery({
+    ...getUserInfoOptions(),
+    ...queryConfig,
+  })
 }

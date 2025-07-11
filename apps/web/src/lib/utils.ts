@@ -29,6 +29,10 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+export function sleep(timeout: number) {
+  return new Promise(resolve => setTimeout(resolve, timeout))
+}
+
 export const scrollToIntro = (Ref: RefObject<HTMLDivElement>) => {
   Ref.current?.scrollIntoView({ behavior: 'smooth' })
 }

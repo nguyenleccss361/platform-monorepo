@@ -1,7 +1,7 @@
 import { configureAuth } from 'react-query-auth'
 import storage from '@/utils/storage'
 import type { UserResponse } from '@/types'
-import type { LoginCredentialsDTO } from '@/features/auth/component/LoginForm'
+import type { LoginCredentialsDTO } from '@/features/auth/component/login-form'
 import { loginWithEmailAndPassword } from '@/features/auth/api/login'
 import { registerWithEmailAndPassword, type RegisterCredentialsDTO } from '@/features/auth/api/register'
 

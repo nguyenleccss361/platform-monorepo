@@ -9,7 +9,7 @@ import {
   BtnUserLoginIcon,
   EyeHide,
   EyeShow,
-} from '@/components/SVGIcons'
+} from '@/components/svg-icons'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import {

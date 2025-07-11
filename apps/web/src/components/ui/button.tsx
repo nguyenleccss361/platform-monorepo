@@ -5,7 +5,7 @@ import { useSpinDelay } from 'spin-delay'
 
 import { cn } from '@/lib/utils'
 
-import { Spinner } from '../Spinner'
+import { Spinner } from '../spinner'
 
 const buttonVariants = cva(
   'h-9 flex cursor-pointer items-center justify-center rounded-md font-medium gap-x-2 border border-btn shadow-sm focus:outline-none disabled:cursor-not-allowed disabled:bg-secondary-500 disabled:opacity-70',

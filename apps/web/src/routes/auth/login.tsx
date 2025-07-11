@@ -2,7 +2,7 @@ import { AuthLayout } from '@/components/auth-layout';
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next';
 import useLocalStorageState from 'use-local-storage-state'
-import { LoginForm } from '../../features/auth/component/LoginForm';
+import { LoginForm } from '../../features/auth/component/login-form';
 
 export const Route = createFileRoute("/auth/login")({
   component: RouteComponent,

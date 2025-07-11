@@ -20,10 +20,10 @@ import { Textarea } from '@/components/ui/textarea'
 import { API_URL } from '@/config'
 
 
-import { type UpdateProjectDTO, useUpdateProject } from '../api/updateProject'
+import { type UpdateProjectDTO, useUpdateProject } from '../api/update-project'
 import { CreateProjectSchema, type Project } from '@/routes/_projectLayout.project'
 import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE, useUploadImage } from '@/hook'
-import { useUploadImageAPI } from '../api/uploadImage'
+import { useUploadImageAPI } from '../api/upload-image'
 
 export function UpdateProject({
   close,

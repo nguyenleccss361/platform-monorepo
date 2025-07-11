@@ -19,7 +19,7 @@ import useLocalStorageState from "use-local-storage-state";
 import { useEffect } from "react";
 import { PATHS } from "./PATHS";
 import '@/style/progress-bar.css'
-import { endProgress, startProgress } from "@/components/Progress";
+import { endProgress, startProgress } from "@/components/progress";
 
 export interface RouterAppContext {
 }
@@ -54,8 +54,9 @@ function RootDocument() {
   const {
     status,
     location: { pathname },
+    isLoading
   } = useRouterState({
-    select: s => ({ status: s.status, location: s.location }),
+    select: s => ({ status: s.status, location: s.location, isLoading: s.isLoading }),
   })
 
   // const navigate = useNavigate()

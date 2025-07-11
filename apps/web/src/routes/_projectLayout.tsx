@@ -3,8 +3,8 @@ import { createFileRoute, Outlet } from '@tanstack/react-router'
 import { useState } from 'react'
 import { HiOutlineBars3 } from 'react-icons/hi2'
 import logo from '@/assets/images/logo.svg'
-import ProjectSidebar from '@/features/project/components/ProjectSidebar'
-import { Navbar } from '@/components/Navbar'
+import ProjectSidebar from '@/features/project/components/project-sidebar'
+import { Navbar } from '@/components/nav-bar'
 
 export const Route = createFileRoute('/_projectLayout')({
   component: RouteComponent,

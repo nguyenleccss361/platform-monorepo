@@ -1,5 +1,5 @@
 import { Skeleton } from '@/components/ui/skeleton'
-import { SkeletonCard } from './SkeletonCard'
+import { SkeletonCard } from './skeleton-card'
 import { cn } from '@/lib/utils'
 
 export function SkeletonLoading({ type, className }: { type: 'form' | 'full' | 'one-line' | 'avatar' | 'chart', className?: string }) {

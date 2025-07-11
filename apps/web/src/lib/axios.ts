@@ -5,7 +5,7 @@ import i18n from '@/i18n'
 import { logoutFn } from '@/lib/auth'
 
 import storage, { type UserStorage } from '@/utils/storage'
-import type { UserResponse } from '@/types'
+import type { UserResponse } from '@/types/api'
 import { PATHS } from '@/routes/PATHS'
 
 function authRequestInterceptor(config: InternalAxiosRequestConfig) {

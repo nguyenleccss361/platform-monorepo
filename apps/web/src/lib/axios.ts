@@ -1,24 +1,19 @@
 import Axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios'
 
-import { API_URL } from '@/config'
+import { env } from '@/config'
 import i18n from '@/i18n'
+import { logoutFn } from '@/lib/auth'
+
 import storage, { type UserStorage } from '@/utils/storage'
+import type { UserResponse } from '@/types'
+import { PATHS } from '@/routes/PATHS'
 
-import { logoutFn } from './auth'
-import { useRefreshToken } from '@/features/auth/api/refresh'
-
-type AxiosRequestConfig = InternalAxiosRequestConfig & { sent?: boolean }
-
-function authRequestInterceptor(config: AxiosRequestConfig) {
+function authRequestInterceptor(config: InternalAxiosRequestConfig) {
   const controller = new AbortController()
 
-  const allowedOrigins = [API_URL]
+  const allowedOrigins = [env.API_URL]
   const userStorage = storage.getUser()
-  if (
-    userStorage?.token
-    && allowedOrigins.includes(config.baseURL as unknown as string)
-    && !config.sent
-  ) {
+  if (userStorage?.token && allowedOrigins.includes(config.baseURL as unknown as string)) {
     config.headers.set('Authorization', `Bearer ${userStorage.token}`)
   }
 
@@ -29,7 +24,7 @@ function authRequestInterceptor(config: AxiosRequestConfig) {
 }
 
 export const axios = Axios.create({
-  baseURL: API_URL,
+  baseURL: env.API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -44,12 +39,6 @@ axios.interceptors.response.use(
     const errCode = response.data?.code
     const errMessage = response.data?.message
 
-    if (errCode === 1005) {
-      message = i18n.t('error:server_res_status.1005')
-      const customError = { ...response.data, message }
-
-      return Promise.reject(customError)
-    }
     if (errMessage === 'malformed entity specification') {
       message = i18n.t('error:server_res.malformed_data')
       const customError = { ...response.data, message }
@@ -67,7 +56,7 @@ axios.interceptors.response.use(
     }
   },
   async (error: AxiosError<{ code?: number, message?: string }>) => {
-    console.error('res error: ', error)
+    console.error('axios error: ', error)
 
     let message = ''
     const errRes = error.response
@@ -81,9 +70,7 @@ axios.interceptors.response.use(
         if (!refreshInProgress) {
           refreshInProgress = true
           const refreshToken = storage.getUser()?.refresh_token
-          const prevRequest = error.config as AxiosRequestConfig
-          if (storage.getIsPersistLogin() && refreshToken != null && !prevRequest.sent) {
-            prevRequest.sent = true
+          if (storage.getIsPersistLogin() && refreshToken != null) {
             try {
               const {
                 data: { token: newAccessToken },
@@ -97,6 +84,7 @@ axios.interceptors.response.use(
               }
             }
             catch {
+              redirect401()
               return logoutFn()
             }
             finally {
@@ -104,6 +92,7 @@ axios.interceptors.response.use(
             }
           }
           else {
+            redirect401()
             return logoutFn()
           }
         }
@@ -122,8 +111,10 @@ axios.interceptors.response.use(
     }
 
     switch (errRes?.data.code) {
-      case 401:
+      case 401: {
+        redirect401()
         return logoutFn()
+      }
       case 403:
         message = i18n.t('error:server_res.authorization')
         break
@@ -249,6 +240,10 @@ axios.interceptors.response.use(
         break
       case 2019:
         return logoutFn()
+      case 2:
+        message = i18n.t('error:server_res_status.2')
+        window.location.href = PATHS.PROJECT_MANAGE
+        break
       default:
         message = errRes?.data.message ?? error.message
     }
@@ -258,3 +253,20 @@ axios.interceptors.response.use(
     return Promise.reject(customError)
   },
 )
+
+const useRefreshToken = (refreshToken: string): Promise<{ data: UserResponse }> => {
+  const axiosPersistLogin = Axios.create({
+    baseURL: env.API_URL,
+    headers: {
+      RefreshToken: refreshToken,
+    },
+  })
+
+  return axiosPersistLogin.get('/api/token/refresh')
+}
+
+function redirect401() {
+  const searchParams = new URLSearchParams()
+  const redirectTo = searchParams.get('redirectTo')
+  window.location.href = `${PATHS.LOGIN}?redirectTo=${redirectTo}`
+}

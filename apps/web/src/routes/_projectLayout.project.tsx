@@ -7,11 +7,11 @@ import { ListProjectItem } from '@/features/project/components/list-project-item
 import { useAuthorization } from '@/lib/authorization'
 import type { BasePagination } from '@/types/api'
 import { createFileRoute } from '@tanstack/react-router'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import z from 'zod'
 import { ContentLayout } from './_contentLayout'
-import { queryClient } from '@/lib/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
 
 export type Project = {
   id: string
@@ -48,65 +48,73 @@ export const CreateProjectSchema = z.object({
 
 export const Route = createFileRoute('/_projectLayout/project')({
   component: RouteComponent,
+  pendingComponent: () => {
+    return (<SkeletonLoading type='full' className="bg-slate-300"/>)
+  },
   ssr: false,
-  loader: async () => {
-    queryClient.ensureQueryData(getProjectsOptions())
+  loader: async ({context}) => {
+     context.queryClient.prefetchQuery(getProjectsOptions())
   },
 })
 
 function RouteComponent({ hasSideBar = true }: { hasSideBar?: boolean }) {
   const { t } = useTranslation()
-  const { checkAccessHook } = useAuthorization()
-
-  const [searchQuery, setSearchQuery] = useState('')
-  const { data: projectsData, isLoading: isLoadingProjectsData } = useProjects({
-    search_str: searchQuery,
-  })
 
   return (
     <ContentLayout title={t('cloud:project_manager.title')}>
-      <div className="p-3">
-        <div className="flex items-center">
-          <div className="w-full">
-            <TitleBar
-              className="w-full"
-              title={t('cloud:project_manager.project')}
-            />
-            {Number(projectsData?.total) > 0
-              ? (
-                <div className="w-full">
-                  <div className="my-1 text-sm text-secondary-700">
-                    {t('cloud:project_manager.count_project').replace(
-                      '{{NO_OF_PROJECT}}',
-                      Number(projectsData?.total).toString(),
-                    )}
-                  </div>
+      <Suspense fallback="Tại sao không hiện fallback Suspense???">
+        <ProjectListPanel />
+      </Suspense>
+    </ContentLayout>
+  )
+}
+
+function ProjectListPanel() {
+  const { t } = useTranslation()
+  const { checkAccessHook } = useAuthorization()
+
+  const [searchQuery, setSearchQuery] = useState('')
+  const { data: projectsData } = useSuspenseQuery({
+    ...getProjectsOptions({ search_str: searchQuery }),
+  })
+  
+  return (
+    <div className="p-3">
+      <div className="flex items-center">
+        <div className="w-full">
+          <TitleBar
+            className="w-full"
+            title={t('cloud:project_manager.project')}
+          />
+          {Number(projectsData.total) > 0
+            ? (
+              <div className="w-full">
+                <div className="my-1 text-sm text-secondary-700">
+                  {t('cloud:project_manager.count_project').replace(
+                    '{{NO_OF_PROJECT}}',
+                    Number(projectsData.total).toString(),
+                  )}
                 </div>
-              )
-              : null}
-          </div>
-
-          <div className="ml-3 flex items-center gap-x-4">
-            <SearchField
-              setSearchValue={value => setSearchQuery(value)}
-              closeSearch={true}
-              placeholder={t('cloud:project_manager.search_placeholder')}
-            />
-            {checkAccessHook({
-              allowedRoles: ['SYSTEM_ADMIN', 'TENANT'],
-            }) && <CreateProject />}
-
-          </div>
+              </div>
+            )
+            : null}
         </div>
-
-        <div className="mt-6">
-          {isLoadingProjectsData
-            ? <SkeletonLoading type="full" className="bg-slate-300" />
-            : Number(projectsData?.total) > 0
-              ? <ListProjectItem listProjectData={projectsData?.projects ?? []} />
-              : <div>{t('cloud:project_manager.no_data')}</div>}
+        <div className="ml-3 flex items-center gap-x-4">
+          <SearchField
+            setSearchValue={value => setSearchQuery(value)}
+            closeSearch={true}
+            placeholder={t('cloud:project_manager.search_placeholder')}
+          />
+          {checkAccessHook({
+            allowedRoles: ['SYSTEM_ADMIN', 'TENANT'],
+          }) && <CreateProject />}
         </div>
       </div>
-    </ContentLayout>
+      <div className="mt-6">
+        {Number(projectsData.total) > 0
+          ? <ListProjectItem listProjectData={projectsData.projects ?? []} />
+          : <div>{t('cloud:project_manager.no_data')}</div>}
+      </div>
+    </div>
   )
 }

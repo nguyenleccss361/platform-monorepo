@@ -1,5 +1,5 @@
 import { Toaster } from "@/components/ui/sonner";
-  
+
 import {
   HeadContent,
   Outlet,
@@ -9,21 +9,20 @@ import {
   useRouterState,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import appCss from "../index.css?url";
-import Loader from "@/components/loader";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "@/lib/react-query";
+import { QueryClient } from "@tanstack/react-query";
 import { HelmetProvider } from "react-helmet-async";
 import { useUser } from "@/lib/auth";
 import useLocalStorageState from "use-local-storage-state";
 import { useEffect } from "react";
-import { PATHS } from "./PATHS";
 import '@/style/progress-bar.css'
 import { endProgress, startProgress } from "@/components/progress";
 
 export interface RouterAppContext {
+  queryClient: QueryClient
 }
-  
+
 export const Route = createRootRouteWithContext<RouterAppContext>()({
   head: () => ({
     meta: [
@@ -102,7 +101,7 @@ function RootDocument() {
   useEffect(() => {
     if (status === 'pending') {
       startProgress()
-    } else if(status === 'idle') {
+    } else if (status === 'idle') {
       endProgress()
     }
   }, [status])
@@ -114,19 +113,18 @@ function RootDocument() {
           <HeadContent />
         </head>
         <body>
-          <QueryClientProvider client={queryClient}>
-            <Toaster
-              position="top-right"
-              closeButton
-              richColors
-              duration={5000}
-              visibleToasts={10}
-            />
-            <div className="grid h-svh grid-rows-[auto_1fr]">
-              <Outlet />
-            </div>
-            <TanStackRouterDevtools position="bottom-left" />
-          </QueryClientProvider>
+          <Toaster
+            position="top-right"
+            closeButton
+            richColors
+            duration={5000}
+            visibleToasts={10}
+          />
+          <div className="grid h-svh grid-rows-[auto_1fr]">
+            <Outlet />
+          </div>
+          <TanStackRouterDevtools position="bottom-right" />
+          <ReactQueryDevtools buttonPosition="bottom-left" />
           <Scripts />
         </body>
       </html>

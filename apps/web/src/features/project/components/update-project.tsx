@@ -19,7 +19,6 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { API_URL } from '@/config'
 
-
 import { type UpdateProjectDTO, useUpdateProject } from '../api/update-project'
 import { CreateProjectSchema, type Project } from '@/routes/_project-layout.project'
 import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE, useUploadImage } from '@/hook'

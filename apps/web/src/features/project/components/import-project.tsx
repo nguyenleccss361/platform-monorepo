@@ -17,14 +17,6 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-
-import {
-  type CreateProjectDTO,
-  useUpdateProject,
-  useCreateProject,
-  restoreProjectSchema,
-  ACCEPTED_RESTORE_FILE,
-} from '../api'
 import {
   type RestoreProjectDTO,
   useRestoreProject,
@@ -32,6 +24,8 @@ import {
 import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE, useUploadImage } from '@/hook'
 import { CreateProjectSchema } from '@/routes/_project-layout.project'
 import { useUploadImageAPI } from '../api/upload-image'
+import { ACCEPTED_RESTORE_FILE, restoreProjectSchema, useCreateProject, type CreateProjectDTO } from '../api/create-project'
+import { useUpdateProject } from '../api/update-project'
 
 export const uploadImageResSchema = z.object({
   link: z.string(),

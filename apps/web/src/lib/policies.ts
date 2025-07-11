@@ -1,7 +1,7 @@
 import { type UserStorage } from '@/utils/storage'
 
 import { ROLES } from './authorization'
-import type { PolicyActions, PolicyResources } from '@/types'
+import type { PolicyActions, PolicyResources } from '@/types/api'
 
 type Policy = {
   user?: UserStorage

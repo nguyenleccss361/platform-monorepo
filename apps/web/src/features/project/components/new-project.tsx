@@ -16,14 +16,11 @@ import {
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 
-import {
-  type CreateProjectDTO,
-  useUpdateProject,
-  useCreateProject,
-} from '../api'
 import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE, useUploadImage } from '@/hook'
 import { CreateProjectSchema } from '@/routes/_project-layout.project'
 import { useUploadImageAPI } from '../api/upload-image'
+import { useCreateProject, type CreateProjectDTO } from '../api/create-project'
+import { useUpdateProject } from '../api/update-project'
 
 type NewProjectProps = {
   close: React.Dispatch<React.SetStateAction<boolean>>

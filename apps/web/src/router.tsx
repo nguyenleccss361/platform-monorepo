@@ -15,7 +15,6 @@ export const createRouter = () => {
     },
     defaultNotFoundComponent: () => <div>Not Found</div>,
     Wrap: ({ children }) => <>{children}</>,
-    // defaultSsr: false
   });
   return router;
 };

@@ -6,7 +6,6 @@ import { LoginForm } from '../../features/auth/component/LoginForm';
 
 export const Route = createFileRoute("/auth/login")({
   component: RouteComponent,
-  ssr: false
 });
 
 function RouteComponent() {

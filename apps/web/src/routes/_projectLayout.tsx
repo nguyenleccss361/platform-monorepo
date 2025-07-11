@@ -8,7 +8,6 @@ import { Navbar } from '@/components/Navbar'
 
 export const Route = createFileRoute('/_projectLayout')({
   component: RouteComponent,
-  ssr: false
 })
 
 function RouteComponent({ hasSideBar = true }: { hasSideBar?: boolean }) {

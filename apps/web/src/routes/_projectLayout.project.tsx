@@ -48,9 +48,12 @@ export const CreateProjectSchema = z.object({
 
 export const Route = createFileRoute('/_projectLayout/project')({
   component: RouteComponent,
+  pendingComponent: () => {
+    return (<SkeletonLoading type='full' className="bg-slate-300"/>)
+  },
   ssr: false,
   loader: async () => {
-    queryClient.ensureQueryData(getProjectsOptions())
+    await queryClient.ensureQueryData(getProjectsOptions())
   },
 })
 
@@ -59,7 +62,7 @@ function RouteComponent({ hasSideBar = true }: { hasSideBar?: boolean }) {
   const { checkAccessHook } = useAuthorization()
 
   const [searchQuery, setSearchQuery] = useState('')
-  const { data: projectsData, isLoading: isLoadingProjectsData } = useProjects({
+  const { data: projectsData } = useProjects({
     search_str: searchQuery,
   })
 
@@ -100,11 +103,9 @@ function RouteComponent({ hasSideBar = true }: { hasSideBar?: boolean }) {
         </div>
 
         <div className="mt-6">
-          {isLoadingProjectsData
-            ? <SkeletonLoading type="full" className="bg-slate-300" />
-            : Number(projectsData?.total) > 0
-              ? <ListProjectItem listProjectData={projectsData?.projects ?? []} />
-              : <div>{t('cloud:project_manager.no_data')}</div>}
+          {Number(projectsData?.total) > 0
+            ? <ListProjectItem listProjectData={projectsData?.projects ?? []} />
+            : <div>{t('cloud:project_manager.no_data')}</div>}
         </div>
       </div>
     </ContentLayout>

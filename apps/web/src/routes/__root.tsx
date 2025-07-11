@@ -10,14 +10,12 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import appCss from "../index.css?url";
-import Loader from "@/components/loader";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@/lib/react-query";
 import { HelmetProvider } from "react-helmet-async";
 import { useUser } from "@/lib/auth";
 import useLocalStorageState from "use-local-storage-state";
 import { useEffect } from "react";
-import { PATHS } from "./PATHS";
 import '@/style/progress-bar.css'
 import { endProgress, startProgress } from "@/components/Progress";
 

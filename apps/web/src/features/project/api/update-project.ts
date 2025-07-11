@@ -5,7 +5,7 @@ import { type z } from 'zod'
 
 import { axios } from '@/lib/axios'
 import { type MutationConfig, queryClient } from '@/lib/react-query'
-import type { CreateProjectSchema } from '@/routes/_projectLayout.project'
+import type { CreateProjectSchema } from '@/routes/_project-layout.project'
 
 export type UpdateProjectDTO = {
   data: z.infer<typeof CreateProjectSchema>

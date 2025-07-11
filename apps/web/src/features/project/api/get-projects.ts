@@ -1,7 +1,7 @@
 import { queryOptions, useQuery } from '@tanstack/react-query'
 
 import { axios } from '@/lib/axios'
-import type { ProjectList } from '@/routes/_projectLayout.project'
+import type { ProjectList } from '@/routes/_project-layout.project'
 import { limitPagination } from '@/utils/const'
 import type { QueryConfig } from '@/lib/react-query'
 

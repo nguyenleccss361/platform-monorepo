@@ -29,7 +29,7 @@ import { useDeleteProject } from '../api/delete-project'
 
 import { UpdateProject } from './update-project'
 import { useNavigate } from '@tanstack/react-router'
-import type { Project } from '@/routes/_projectLayout.project'
+import type { Project } from '@/routes/_project-layout.project'
 import { useDisclosure } from '@/hook'
 import { ConfirmDialog } from '@/components/confirm-dialog'
 

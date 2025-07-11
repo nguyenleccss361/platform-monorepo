@@ -10,7 +10,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Suspense, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import z from 'zod'
-import { ContentLayout } from './_contentLayout'
+import { ContentLayout } from './_content-layout'
 import { useSuspenseQuery } from '@tanstack/react-query'
 
 export type Project = {
@@ -46,7 +46,7 @@ export const CreateProjectSchema = z.object({
   description: z.string(),
 })
 
-export const Route = createFileRoute('/_projectLayout/project')({
+export const Route = createFileRoute('/_project-layout/project')({
   component: RouteComponent,
   pendingComponent: () => {
     return (<SkeletonLoading type='full' className="bg-slate-300"/>)

@@ -7,7 +7,7 @@ import i18n from '@/i18n'
 import { axios } from '@/lib/axios'
 import { type MutationConfig, queryClient } from '@/lib/react-query'
 import type { BaseAPIRes } from '@/types/api'
-import type { CreateProjectSchema } from '@/routes/_projectLayout.project'
+import type { CreateProjectSchema } from '@/routes/_project-layout.project'
 
 type CreateProjectRes = {
   id: string

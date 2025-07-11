@@ -99,12 +99,12 @@ function RootDocument() {
   //   }
   // }, [isAuthRoutes, projectId, userDataFromStorage])
   useEffect(() => {
-    if (status === 'pending') {
+    if (isLoading && status === 'pending') {
       startProgress()
-    } else if (status === 'idle') {
+    } else if (!isLoading || status === 'idle') {
       endProgress()
     }
-  }, [status])
+  }, [status, isLoading])
 
   return (
     <HelmetProvider>

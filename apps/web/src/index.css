@@ -1,9 +1,211 @@
 /* stylelint-disable custom-property-empty-line-before */
-@import '../public/fonts/font.css';
+@import '../public/fonts/font.css' layer(base);
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@plugin 'tailwindcss-animate';
+
+@source './**/*.{ts,tsx}';
+
+@theme {
+  --color-focus: hsl(var(--primary));
+
+  --color-hover-secondary: hsl(var(--hover-secondary));
+
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-border: hsl(var(--border));
+  --color-outline: hsl(var(--outline));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-background-upload: hsl(var(--background-upload));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-primary-100: hsl(var(--primary-100));
+  --color-primary-200: hsl(var(--primary-200));
+  --color-primary-300: hsl(var(--primary-300));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary-500: hsl(var(--secondary-500));
+  --color-secondary-600: hsl(var(--secondary-600));
+  --color-secondary-700: hsl(var(--secondary-700));
+  --color-secondary-900: hsl(var(--secondary-900));
+  --color-secondary: hsl(var(--secondary));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-btn: hsla(
+    var(--btn-hue),
+    var(--btn-saturation),
+    var(--btn-lightness),
+    1
+  );
+  --color-search: hsla(
+    var(--search-hue),
+    var(--search-saturation),
+    var(--search-lightness),
+    var(--search-alpha)
+  );
+
+  --font-sans:
+    Public Sans, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-pdf: Roboto;
+
+  --text-h1: 1rem;
+  --text-h1--line-height: 1.3rem;
+  --text-h1--font-weight: 600;
+  --text-h2: 1rem;
+  --text-h2--line-height: 1.3rem;
+  --text-h2--font-weight: 600;
+  --text-table-header: 1rem;
+  --text-table-header--line-height: 1.3rem;
+  --text-table-header--font-weight: 600;
+  --text-body-md: 1rem;
+  --text-body-md--line-height: 1.3rem;
+  --text-body-md--font-weight: 400;
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.125rem;
+  --text-body-sm--font-weight: 400;
+  --text-body-xs: 0.75rem;
+  --text-body-xs--line-height: 0.975rem;
+  --text-body-xs--font-weight: 400;
+  --text-body-light: 0.75rem;
+  --text-body-light--line-height: 0.975rem;
+  --text-body-light--font-weight: 300;
+
+  --breakpoint-xs2: 275.98px;
+  --breakpoint-xs: 399.98px;
+  --breakpoint-sm: 575.98px;
+  --breakpoint-md: 767.98px;
+  --breakpoint-lg: 1023.98px;
+  --breakpoint-xl: 1279.98px;
+  --breakpoint-2xl: 1535.98px;
+
+  --animate-slide-down: slideDown 300ms cubic-bezier(0.87, 0, 0.13, 1);
+  --animate-slide-up: slideUp 300ms cubic-bezier(0.87, 0, 0.13, 1);
+  --animate-slide-down-and-fade: slideDownAndFade 400ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-left-and-fade: slideLeftAndFade 400ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-up-and-fade: slideUpAndFade 400ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-right-and-fade: slideRightAndFade 400ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-loading-bar: loading-bar 2s linear infinite;
+
+  @keyframes slideDown {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes slideUp {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+  @keyframes slideDownAndFade {
+    from {
+      opacity: 0;
+      transform: translateY(-2px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes slideLeftAndFade {
+    from {
+      opacity: 0;
+      transform: translateX(2px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  @keyframes slideUpAndFade {
+    from {
+      opacity: 0;
+      transform: translateY(2px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes slideRightAndFade {
+    from {
+      opacity: 0;
+      transform: translateX(2px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  @keyframes loading-bar {
+    0% {
+      left: 0%;
+      right: 100%;
+      width: 0%;
+    }
+    10% {
+      left: 0%;
+      right: 75%;
+      width: 25%;
+    }
+    90% {
+      right: 0%;
+      left: 75%;
+      width: 25%;
+    }
+    100% {
+      left: 100%;
+      right: 0%;
+      width: 0%;
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 @layer base {
   :root {
@@ -132,8 +334,13 @@
   :-webkit-autofill {
     transition: all 100000s ease-in-out 0s;
   }
+}
+input[type='file'] {
+  display: none;
+}
 
-  input[type='file'] {
-    display: none;
+@layer utilities {
+  .space-y-1 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.25rem;
   }
 }

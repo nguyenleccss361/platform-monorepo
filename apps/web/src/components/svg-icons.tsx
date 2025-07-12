@@ -1316,7 +1316,7 @@ export function IconCheckbox({
   return (
     <div
       className={cn(
-        'peer relative !flex size-[18px] shrink-0 cursor-pointer items-center justify-center rounded-sm border border-gray-500 bg-white text-gray-500 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-none',
+        'peer relative flex! size-[18px] shrink-0 cursor-pointer items-center justify-center rounded-xs border border-gray-500 bg-white text-gray-500 ring-offset-background focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-none',
         { 'border-none bg-primary text-white': isCheck },
         { 'cursor-not-allowed opacity-50': disabled },
         className,
@@ -1325,7 +1325,7 @@ export function IconCheckbox({
       {isCheck && <Check className="absolute size-[16px]" />}
       {checked === 'indeterminate' && (
         <LuSquare
-          className="absolute !p-[2px]"
+          className="absolute p-[2px]!"
           color="#EE0033"
           size={18}
           fill="#EE0033"

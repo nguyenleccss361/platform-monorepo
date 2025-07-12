@@ -8,22 +8,22 @@ import { cn } from '@/lib/utils'
 import { Spinner } from '../spinner'
 
 const buttonVariants = cva(
-  'h-9 flex cursor-pointer items-center justify-center rounded-md font-medium gap-x-2 border border-btn shadow-sm focus:outline-none disabled:cursor-not-allowed disabled:bg-secondary-500 disabled:opacity-70',
+  'h-9 flex cursor-pointer items-center justify-center rounded-md font-medium gap-x-2 border border-btn shadow-xs focus:outline-hidden disabled:cursor-not-allowed disabled:bg-secondary-500 disabled:opacity-70',
   {
     variants: {
       variant: {
-        primary: 'min-w-24 !bg-primary !text-white',
+        primary: 'min-w-24 bg-primary! text-white!',
         secondary: 'bg-secondary-600', // hover:bg-secondary/80
         secondaryLight: 'min-w-24 bg-secondary-500 border-none',
-        danger: 'min-w-24 !bg-primary-200 text-primary border-none',
+        danger: 'min-w-24 bg-primary-200! text-primary border-none',
         trans: 'bg-transparent border-none',
         muted: 'bg-white',
         outline:
           'border-input bg-background hover:bg-accent hover:text-accent-foreground',
         none: 'bg-transparent shadow-none border-none',
         full: 'block w-full bg-white border-secondary-600',
-        pagination: 'min-w-9 !bg-white !p-2',
-        search: 'bg-search border-none !p-2',
+        pagination: 'min-w-9 bg-white! p-2!',
+        search: 'bg-search border-none p-2!',
         disable:
           'min-w-24 bg-secondary-500 text-secondary-700 border-none cursor-not-allowed opacity-70',
         downloadFile: 'bg-green-100 text-green-500 border-none',

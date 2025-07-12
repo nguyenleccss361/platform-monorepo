@@ -9,7 +9,7 @@ export function TitleBar({
   className?: string | Record<string, boolean>
 }) {
   return (
-    <h2 className={cn('flex items-center text-2xl font-[600]', className)}>
+    <h2 className={cn('flex items-center text-2xl font-semibold', className)}>
       {title}
     </h2>
   )

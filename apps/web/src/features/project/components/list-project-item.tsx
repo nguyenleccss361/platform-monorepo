@@ -79,7 +79,7 @@ export function ListProjectItem({
         return (
           <div
             key={project.id}
-            className="relative cursor-pointer bg-backgroundUpload shadow-xl"
+            className="relative cursor-pointer bg-background-upload shadow-xl"
             style={{
               height: '186px',
               backgroundSize: '100% 100%',
@@ -118,7 +118,7 @@ export function ListProjectItem({
               >
                 <DropdownMenu>
                   <DropdownMenuTrigger>
-                    <div className="flex items-center justify-center rounded-md text-body-sm text-white hover:bg-primary/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+                    <div className="flex items-center justify-center rounded-md text-body-sm text-white hover:bg-primary/40 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white/75">
                       <BtnContextMenuIcon
                         height={20}
                         width={18}

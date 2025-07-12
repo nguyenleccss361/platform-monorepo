@@ -28,11 +28,11 @@ import { API_URL } from '@/config'
 import i18n from '@/i18n'
 import { useLogout, useUser } from '@/lib/auth'
 import { Link, useNavigate, useRouterState } from '@tanstack/react-router'
-import { useCopyId } from '@/hook'
 import { useProjects } from '@/features/project/api/get-projects'
 import { useUserInfo } from '@/features/auth/api/get-user-info'
 import { cn } from '@/lib/utils'
 import { Spinner } from './spinner'
+import { useCopyId } from '@/hook/use-copy-id'
 
 const languages = [
   { code: 'vi', name: 'Tiếng Việt', icon: VietNam },

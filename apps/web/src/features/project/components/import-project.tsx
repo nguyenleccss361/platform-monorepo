@@ -21,11 +21,12 @@ import {
   type RestoreProjectDTO,
   useRestoreProject,
 } from '../api/restore-project'
-import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE, useUploadImage } from '@/hook'
 import { CreateProjectSchema } from '@/routes/_project-layout.project'
 import { useUploadImageAPI } from '../api/upload-image'
 import { ACCEPTED_RESTORE_FILE, restoreProjectSchema, useCreateProject, type CreateProjectDTO } from '../api/create-project'
 import { useUpdateProject } from '../api/update-project'
+import { useUploadImage } from '@/hook/use-upload-image'
+import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from '@/utils/const'
 
 export const uploadImageResSchema = z.object({
   link: z.string(),

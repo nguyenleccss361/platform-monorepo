@@ -11,8 +11,8 @@ import { HiOutlineXMark } from 'react-icons/hi2'
 import btnCancelIcon from '@/assets/icons/btn-cancel.svg'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTitle } from '@/components/ui/dialog'
-import { useDisclosure } from '@/hook'
 import { cn } from '@/lib/utils'
+import { useDisclosure } from '@/hook/use-disclosure'
 
 const formDialogSizes = {
   sm: 'max-w-[32rem]',

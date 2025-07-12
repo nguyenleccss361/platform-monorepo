@@ -30,8 +30,8 @@ import { useDeleteProject } from '../api/delete-project'
 import { UpdateProject } from './update-project'
 import { useNavigate } from '@tanstack/react-router'
 import type { Project } from '@/routes/_project-layout.project'
-import { useDisclosure } from '@/hook'
 import { ConfirmDialog } from '@/components/confirm-dialog'
+import { useDisclosure } from '@/hook/use-disclosure'
 
 export function ListProjectItem({
   listProjectData,

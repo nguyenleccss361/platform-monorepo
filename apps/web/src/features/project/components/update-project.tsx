@@ -21,8 +21,9 @@ import { API_URL } from '@/config'
 
 import { type UpdateProjectDTO, useUpdateProject } from '../api/update-project'
 import { CreateProjectSchema, type Project } from '@/routes/_project-layout.project'
-import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE, useUploadImage } from '@/hook'
 import { useUploadImageAPI } from '../api/upload-image'
+import { useUploadImage } from '@/hook/use-upload-image'
+import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from '@/utils/const'
 
 export function UpdateProject({
   close,

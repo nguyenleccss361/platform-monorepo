@@ -4,7 +4,7 @@ import { type z } from 'zod'
 import { axios } from '@/lib/axios'
 import { type MutationConfig, queryClient } from '@/lib/react-query'
 import type { uploadImageResSchema } from '../components/import-project'
-import type { UploadImageDTO } from '@/hook'
+import type { UploadImageDTO } from '@/hook/use-upload-image'
 type UploadImageRes = z.infer<typeof uploadImageResSchema>
 
 export const uploadImage = ({

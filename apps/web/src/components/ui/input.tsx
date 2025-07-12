@@ -35,7 +35,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps & IconProps>(
         <input
           type={type}
           className={cn(
-            'block w-full appearance-none rounded-md border border-secondary-600 px-3 py-2 text-black shadow-sm placeholder:text-secondary-700 focus:outline-2 focus:outline-outline focus:ring-outline disabled:cursor-not-allowed disabled:bg-secondary-500 disabled:opacity-70',
+            'block w-full appearance-none rounded-md border border-secondary-600 px-3 py-2 text-black shadow-xs placeholder:text-secondary-700 focus:outline-2 focus:outline-outline focus:ring-outline disabled:cursor-not-allowed disabled:bg-secondary-500 disabled:opacity-70',
             {
               'pl-10': startIcon,
               'pr-10': endIcon,

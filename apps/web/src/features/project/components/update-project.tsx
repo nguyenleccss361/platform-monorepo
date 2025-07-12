@@ -21,8 +21,9 @@ import { API_URL } from '@/config'
 
 import { type UpdateProjectDTO, useUpdateProject } from '../api/update-project'
 import { CreateProjectSchema, type Project } from '@/routes/_project-layout.project'
-import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE, useUploadImage } from '@/hook'
 import { useUploadImageAPI } from '../api/upload-image'
+import { useUploadImage } from '@/hook/use-upload-image'
+import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from '@/utils/const'
 
 export function UpdateProject({
   close,
@@ -93,7 +94,7 @@ export function UpdateProject({
       <div className="inline-block rounded-lg bg-white px-4 pb-4 pt-5 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-xl sm:p-8 sm:align-middle">
         <div className="absolute -right-3 -top-3">
           <button
-            className="rounded-md bg-white text-secondary-900 hover:text-secondary-700 focus:outline-none focus:ring-2 focus:ring-secondary-600"
+            className="rounded-md bg-white text-secondary-900 hover:text-secondary-700 focus:outline-hidden focus:ring-2 focus:ring-secondary-600"
             onClick={close}
           >
             <span className="sr-only">Close panel</span>
@@ -201,7 +202,7 @@ export function UpdateProject({
                   />
                 </div>
                 <div>
-                  <div className="relative my-4 h-28 rounded-md bg-backgroundUpload">
+                  <div className="relative my-4 h-28 rounded-md bg-background-upload">
                     <div className="absolute left-5 top-5 text-white">
                       <p className="mb-3 font-semibold">
                         {watch('name') !== '' && watch('name') != null
@@ -264,7 +265,7 @@ export function UpdateProject({
                         name="file"
                         render={({ field }) => (
                           <FormItem className="space-y-0">
-                            <FormLabel className="flex h-9 w-fit cursor-pointer items-center justify-center gap-x-2 rounded-md border bg-primary-200 px-5 py-2 font-medium text-primary shadow-sm hover:opacity-80">
+                            <FormLabel className="flex h-9 w-fit cursor-pointer items-center justify-center gap-x-2 rounded-md border bg-primary-200 px-5 py-2 font-medium text-primary shadow-xs hover:opacity-80">
                               {t('cloud:project_manager.add_project.upload')}
                             </FormLabel>
                             <div>

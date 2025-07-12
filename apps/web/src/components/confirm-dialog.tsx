@@ -41,7 +41,7 @@ export const ConfirmDialog = ({
         <div className="relative inline-block rounded-lg bg-white px-4 pb-4 pt-5 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle">
           <div className="absolute -right-3 -top-3">
             <button
-              className="rounded-md bg-white text-secondary-900 hover:text-secondary-700 focus:outline-none focus:ring-2 focus:ring-secondary-600"
+              className="rounded-md bg-white text-secondary-900 hover:text-secondary-700 focus:outline-hidden focus:ring-2 focus:ring-secondary-600"
               onClick={close}
             >
               <span className="sr-only">Close panel</span>

@@ -16,11 +16,12 @@ import {
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 
-import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE, useUploadImage } from '@/hook'
 import { CreateProjectSchema } from '@/routes/_project-layout.project'
 import { useUploadImageAPI } from '../api/upload-image'
 import { useCreateProject, type CreateProjectDTO } from '../api/create-project'
 import { useUpdateProject } from '../api/update-project'
+import { useUploadImage } from '@/hook/use-upload-image'
+import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from '@/utils/const'
 
 type NewProjectProps = {
   close: React.Dispatch<React.SetStateAction<boolean>>
@@ -171,7 +172,7 @@ export function NewProject({ close }: NewProjectProps) {
               />
             </div>
             <div>
-              <div className="relative mb-4 h-28 rounded-md bg-backgroundUpload">
+              <div className="relative mb-4 h-28 rounded-md bg-background-upload">
                 <div className="absolute left-5 top-5 text-white">
                   <p className="mb-3 font-semibold">
                     {watch('name') !== '' && watch('name') != null
@@ -230,7 +231,7 @@ export function NewProject({ close }: NewProjectProps) {
                     name="file"
                     render={({ field }) => (
                       <FormItem className="space-y-0">
-                        <FormLabel className="flex h-9 w-fit cursor-pointer items-center justify-center gap-x-2 rounded-md border bg-primary-200 px-5 py-2 font-medium text-primary shadow-sm hover:opacity-80">
+                        <FormLabel className="flex h-9 w-fit cursor-pointer items-center justify-center gap-x-2 rounded-md border bg-primary-200 px-5 py-2 font-medium text-primary shadow-xs hover:opacity-80">
                           {t('cloud:project_manager.add_project.upload')}
                         </FormLabel>
                         <div>

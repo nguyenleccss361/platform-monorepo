@@ -28,11 +28,11 @@ import { API_URL } from '@/config'
 import i18n from '@/i18n'
 import { useLogout, useUser } from '@/lib/auth'
 import { Link, useNavigate, useRouterState } from '@tanstack/react-router'
-import { useCopyId } from '@/hook'
 import { useProjects } from '@/features/project/api/get-projects'
 import { useUserInfo } from '@/features/auth/api/get-user-info'
 import { cn } from '@/lib/utils'
 import { Spinner } from './spinner'
+import { useCopyId } from '@/hook/use-copy-id'
 
 const languages = [
   { code: 'vi', name: 'Tiếng Việt', icon: VietNam },
@@ -92,7 +92,7 @@ export function Navbar() {
             </DropdownMenuTrigger>
           </div>
           <DropdownMenuContent
-            className="flex max-h-[360px] w-[260px] min-w-[260px] flex-col overflow-y-auto rounded-md bg-white p-3 shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade data-[side=right]:animate-slideLeftAndFade data-[side=top]:animate-slideDownAndFade"
+            className="flex max-h-[360px] w-[260px] min-w-[260px] flex-col overflow-y-auto rounded-md bg-white p-3 shadow-[0px_10px_38px_-10px_rgba(22,23,24,0.35),0px_10px_20px_-15px_rgba(22,23,24,0.2)] will-change-[opacity,transform] data-[side=bottom]:animate-slide-up-and-fade data-[side=left]:animate-slide-right-and-fade data-[side=right]:animate-slide-left-and-fade data-[side=top]:animate-slide-down-and-fade"
             sideOffset={20}
           >
             <Command>
@@ -130,9 +130,9 @@ export function Navbar() {
                           // navigate({ to: `${PATHS.ORG_MANAGE}/${project.id}`})
                         }}
                         className={cn(
-                          'group relative my-1 flex cursor-pointer select-none items-center gap-x-3 gap-y-5 rounded-lg px-1 py-2 pl-3 leading-none outline-none hover:bg-hover-secondary/10',
+                          'group relative my-1 flex cursor-pointer select-none items-center gap-x-3 gap-y-5 rounded-lg px-1 py-2 pl-3 leading-none outline-hidden hover:bg-hover-secondary/10',
                           {
-                            'bg-primary text-white aria-selected:bg-primary/100 aria-selected:text-white':
+                            'bg-primary text-white aria-selected:bg-primary aria-selected:text-white':
                               project.id === projectId,
                           },
                         )}
@@ -192,13 +192,13 @@ export function Navbar() {
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="flex max-h-[360px] min-w-[160px] flex-col overflow-y-auto rounded-md bg-white p-3 shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade data-[side=right]:animate-slideLeftAndFade data-[side=top]:animate-slideDownAndFade"
+            className="flex max-h-[360px] min-w-[160px] flex-col overflow-y-auto rounded-md bg-white p-3 shadow-[0px_10px_38px_-10px_rgba(22,23,24,0.35),0px_10px_20px_-15px_rgba(22,23,24,0.2)] will-change-[opacity,transform] data-[side=bottom]:animate-slide-up-and-fade data-[side=left]:animate-slide-right-and-fade data-[side=right]:animate-slide-left-and-fade data-[side=top]:animate-slide-down-and-fade"
             sideOffset={-15}
           >
             {languages.map(language => (
               <DropdownMenuItem
                 key={language.code}
-                className="group relative mb-1 flex cursor-pointer select-none items-center gap-x-3 rounded-md px-1 leading-none outline-none hover:bg-hover-secondary/10"
+                className="group relative mb-1 flex cursor-pointer select-none items-center gap-x-3 rounded-md px-1 leading-none outline-hidden hover:bg-hover-secondary/10"
                 onClick={() => changeLanguage(language.code)}
               >
                 <img src={language.icon} alt="" className="h-auto w-8" />
@@ -236,7 +236,7 @@ export function Navbar() {
                       )}
                     <div className="">
                       <div className="flex items-center gap-2">
-                        <p className="h-fit font-[600]">
+                        <p className="h-fit font-semibold">
                           {userInfoData != null
                             ? userInfoData.name
                             : t('nav:friend')}
@@ -255,10 +255,10 @@ export function Navbar() {
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent
-                className="flex max-h-[360px] w-[220px] flex-col overflow-y-auto rounded-md bg-white p-3 shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade data-[side=right]:animate-slideLeftAndFade data-[side=top]:animate-slideDownAndFade"
+                className="flex max-h-[360px] w-[220px] flex-col overflow-y-auto rounded-md bg-white p-3 shadow-[0px_10px_38px_-10px_rgba(22,23,24,0.35),0px_10px_20px_-15px_rgba(22,23,24,0.2)] will-change-[opacity,transform] data-[side=bottom]:animate-slide-up-and-fade data-[side=left]:animate-slide-right-and-fade data-[side=right]:animate-slide-left-and-fade data-[side=top]:animate-slide-down-and-fade"
                 sideOffset={-15}
               >
-                <DropdownMenuItem className="mb-2 rounded-md p-2 hover:bg-hover-secondary/10 focus-visible:border-none focus-visible:outline-none">
+                <DropdownMenuItem className="mb-2 rounded-md p-2 hover:bg-hover-secondary/10 focus-visible:border-none focus-visible:outline-hidden">
                   {userDataFromStorage != null
                     ? (
                       <p
@@ -274,9 +274,9 @@ export function Navbar() {
                 <DropdownMenuItem
                   asChild
                   className={cn(
-                    'mb-2 rounded-md p-2 hover:bg-hover-secondary/10 focus-visible:border-none focus-visible:outline-none',
+                    'mb-2 rounded-md p-2 hover:bg-hover-secondary/10 focus-visible:border-none focus-visible:outline-hidden',
                     {
-                      'bg-primary text-white hover:bg-primary/100':
+                      'bg-primary text-white hover:bg-primary':
                         location.pathname.split('/')[1] === 'auth',
                     },
                   )}
@@ -286,7 +286,7 @@ export function Navbar() {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  className="cursor-pointer rounded-md p-2 hover:bg-hover-secondary/10 focus-visible:border-none focus-visible:outline-none"
+                  className="cursor-pointer rounded-md p-2 hover:bg-hover-secondary/10 focus-visible:border-none focus-visible:outline-hidden"
                   onClick={() => logout.mutate({})}
                 >
                   <p>{t('user:logout')}</p>

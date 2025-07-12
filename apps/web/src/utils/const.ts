@@ -8,3 +8,7 @@ export const mediaQueryPoint = {
   'xl': 1279.98,
   '2xl': 1535.98,
 }
+
+export const MAX_FILE_SIZE = 5000000
+
+export const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png']

@@ -4,12 +4,6 @@ import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
 
-import {
-  BtnPasswordLoginIcon,
-  BtnUserLoginIcon,
-  EyeHide,
-  EyeShow,
-} from '@/components/svg-icons'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
@@ -24,6 +18,7 @@ import { Input } from '@/components/ui/input'
 import { useLogin } from '@/lib/auth'
 import { Link } from '@tanstack/react-router'
 import { emailSchema, passwordSchema } from '@/utils/schemaValidation'
+import { BtnPasswordLoginIcon, BtnUserLoginIcon, EyeHide, EyeShow } from '@/components/svg-icons'
 
 const loginSchema = z.object({
   identifier: emailSchema,

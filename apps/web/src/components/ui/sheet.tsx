@@ -70,7 +70,7 @@ const SheetContent = React.forwardRef<
       >
         {children}
         {!closeButtonAvai && (
-          <SheetPrimitive.Close className="absolute right-6 top-6 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none data-[state=open]:bg-secondary">
+          <SheetPrimitive.Close className="absolute right-6 top-6 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden disabled:pointer-events-none data-[state=open]:bg-secondary">
             <div onClick={onClick}>
               <X className="size-6" />
               <span className="sr-only">Close</span>

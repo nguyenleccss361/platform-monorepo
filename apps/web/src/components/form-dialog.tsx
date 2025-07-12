@@ -11,15 +11,15 @@ import { HiOutlineXMark } from 'react-icons/hi2'
 import btnCancelIcon from '@/assets/icons/btn-cancel.svg'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTitle } from '@/components/ui/dialog'
-import { useDisclosure } from '@/hook'
 import { cn } from '@/lib/utils'
+import { useDisclosure } from '@/hook/use-disclosure'
 
 const formDialogSizes = {
-  sm: 'max-w-[32rem]',
-  xl: 'max-w-[36rem]',
-  md: 'max-w-[48rem]',
-  lg: 'max-w-[60rem]',
-  max: 'max-w-[75rem]',
+  sm: 'max-w-lg',
+  xl: 'max-w-xl',
+  md: 'max-w-3xl',
+  lg: 'max-w-240',
+  max: 'max-w-300',
 }
 
 export type ConfirmationDialogProps = {
@@ -89,14 +89,14 @@ export const FormDialog = ({
               ? formDialogSizes[size]
               : 'sm:max-w-lg',
             isFullScreen
-              ? 'h-screen !max-w-full pt-3'
+              ? 'h-screen max-w-full! pt-3'
               : '',
           )}
         >
           {!isFullScreen && (
             <div className="absolute -right-3 -top-3">
               <button
-                className="rounded-md bg-white text-secondary-900 hover:text-secondary-700 focus:outline-none focus:ring-2 focus:ring-secondary-600"
+                className="rounded-md bg-white text-secondary-900 hover:text-secondary-700 focus:outline-hidden focus:ring-2 focus:ring-secondary-600"
                 onClick={close}
               >
                 <span className="sr-only">Close panel</span>
